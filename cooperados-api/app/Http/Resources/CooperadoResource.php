@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Http\Resources;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,7 +16,8 @@ class CooperadoResource extends JsonResource
             'documento_formatado' => $this->getDocumentoFormatado(),
             'tipo_pessoa' => $this->tipo_pessoa->value,
             'tipo_pessoa_label' => $this->getTipoPessoaLabel(),
-            'data_referencia' => $this->data_referencia->format('Y-m-d'),
+            'data_nascimento' => $this->data_nascimento?->format('Y-m-d'),
+            'data_constituicao' => $this->data_constituicao?->format('Y-m-d'),
             'renda_faturamento' => $this->renda_faturamento,
             'telefone' => $this->telefone,
             'telefone_formatado' => $this->getTelefoneFormatado(),

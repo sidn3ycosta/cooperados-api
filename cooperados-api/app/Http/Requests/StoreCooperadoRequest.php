@@ -39,7 +39,26 @@ class StoreCooperadoRequest extends FormRequest
                 'unique:cooperados,documento'
             ],
             'tipo_pessoa' => ['required', Rule::in(['PF', 'PJ'])],
-            'data_referencia' => 'required|date|before_or_equal:today',
+            
+            // Campos específicos por tipo de pessoa
+            'data_nascimento' => [
+                'required_if:tipo_pessoa,PF',
+                'date',
+                'before_or_equal:today',
+                function ($attribute, $value, $fail) {
+                    $idade = now()->diff(new \DateTime($value))->y;
+                    if ($idade < 18) {
+                        $fail('Cooperado deve ter pelo menos 18 anos.');
+                    }
+                }
+            ],
+            
+            'data_constituicao' => [
+                'required_if:tipo_pessoa,PJ',
+                'date',
+                'before_or_equal:today'
+            ],
+            
             'renda_faturamento' => 'required|numeric|min:0.01|max:999999999.99',
             'telefone' => [
                 'required',
@@ -65,8 +84,16 @@ class StoreCooperadoRequest extends FormRequest
             'documento.unique' => 'Este documento já está cadastrado.',
             'tipo_pessoa.required' => 'O tipo de pessoa é obrigatório.',
             'tipo_pessoa.in' => 'Tipo de pessoa deve ser PF ou PJ.',
-            'data_referencia.required' => 'A data de referência é obrigatória.',
-            'data_referencia.before_or_equal' => 'A data de referência não pode ser no futuro.',
+            
+            // Mensagens específicas para campos de data
+            'data_nascimento.required_if' => 'A data de nascimento é obrigatória para pessoa física.',
+            'data_nascimento.date' => 'A data de nascimento deve ser uma data válida.',
+            'data_nascimento.before_or_equal' => 'A data de nascimento não pode ser no futuro.',
+            
+            'data_constituicao.required_if' => 'A data de constituição é obrigatória para pessoa jurídica.',
+            'data_constituicao.date' => 'A data de constituição deve ser uma data válida.',
+            'data_constituicao.before_or_equal' => 'A data de constituição não pode ser no futuro.',
+            
             'renda_faturamento.required' => 'A renda/faturamento é obrigatória.',
             'renda_faturamento.numeric' => 'A renda/faturamento deve ser um número.',
             'renda_faturamento.min' => 'A renda/faturamento deve ser maior que zero.',
@@ -81,7 +108,7 @@ class StoreCooperadoRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $this->validateDocumento($validator);
-            $this->validateDataReferencia($validator);
+            $this->validateDataIdentificacao($validator);
         });
     }
 
@@ -101,19 +128,29 @@ class StoreCooperadoRequest extends FormRequest
         }
     }
 
-    private function validateDataReferencia($validator): void
+    private function validateDataIdentificacao($validator): void
     {
-        $dataReferencia = $this->input('data_referencia');
         $tipoPessoa = $this->input('tipo_pessoa');
 
-        if ($dataReferencia && $tipoPessoa) {
-            $data = new \DateTime($dataReferencia);
-            $hoje = new \DateTime();
-
-            if ($tipoPessoa === TipoPessoa::PESSOA_FISICA->value) {
+        if ($tipoPessoa === TipoPessoa::PESSOA_FISICA->value) {
+            $dataNascimento = $this->input('data_nascimento');
+            if ($dataNascimento) {
+                $data = new \DateTime($dataNascimento);
+                $hoje = new \DateTime();
                 $idade = $hoje->diff($data)->y;
+                
                 if ($idade < 18) {
-                    $validator->errors()->add('data_referencia', 'Cooperado deve ter pelo menos 18 anos.');
+                    $validator->errors()->add('data_nascimento', 'Cooperado deve ter pelo menos 18 anos.');
+                }
+            }
+        } elseif ($tipoPessoa === TipoPessoa::PESSOA_JURIDICA->value) {
+            $dataConstituicao = $this->input('data_constituicao');
+            if ($dataConstituicao) {
+                $data = new \DateTime($dataConstituicao);
+                $hoje = new \DateTime();
+                
+                if ($data > $hoje) {
+                    $validator->errors()->add('data_constituicao', 'Data de constituição não pode ser no futuro.');
                 }
             }
         }

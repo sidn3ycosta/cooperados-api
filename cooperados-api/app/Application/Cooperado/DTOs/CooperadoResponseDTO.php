@@ -15,13 +15,14 @@ class CooperadoResponseDTO
         public readonly string $documentoFormatado,
         public readonly TipoPessoa $tipoPessoa,
         public readonly string $tipoPessoaLabel,
-        public readonly DateTime $dataReferencia,
+        public readonly ?DateTime $dataNascimento,
+        public readonly ?DateTime $dataConstituicao,
         public readonly float $rendaFaturamento,
         public readonly string $telefone,
         public readonly string $telefoneFormatado,
         public readonly ?string $email,
         public readonly DateTime $createdAt,
-        public readonly DateTime $updatedAt,
+        public readonly DateTime $updatedAt
     ) {}
 
     public static function fromEntity(Cooperado $cooperado): self
@@ -33,13 +34,14 @@ class CooperadoResponseDTO
             documentoFormatado: $cooperado->getDocumentoFormatado(),
             tipoPessoa: $cooperado->tipo_pessoa,
             tipoPessoaLabel: $cooperado->getTipoPessoaLabel(),
-            dataReferencia: $cooperado->data_referencia,
+            dataNascimento: $cooperado->data_nascimento,
+            dataConstituicao: $cooperado->data_constituicao,
             rendaFaturamento: $cooperado->renda_faturamento,
             telefone: $cooperado->telefone,
             telefoneFormatado: $cooperado->getTelefoneFormatado(),
             email: $cooperado->email,
             createdAt: $cooperado->created_at,
-            updatedAt: $cooperado->updated_at,
+            updatedAt: $cooperado->updated_at
         );
     }
 
@@ -52,7 +54,8 @@ class CooperadoResponseDTO
             'documento_formatado' => $this->documentoFormatado,
             'tipo_pessoa' => $this->tipoPessoa->value,
             'tipo_pessoa_label' => $this->tipoPessoaLabel,
-            'data_referencia' => $this->dataReferencia->format('Y-m-d'),
+            'data_nascimento' => $this->dataNascimento?->format('Y-m-d'),
+            'data_constituicao' => $this->dataConstituicao?->format('Y-m-d'),
             'renda_faturamento' => $this->rendaFaturamento,
             'telefone' => $this->telefone,
             'telefone_formatado' => $this->telefoneFormatado,

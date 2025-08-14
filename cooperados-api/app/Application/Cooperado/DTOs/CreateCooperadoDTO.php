@@ -11,10 +11,11 @@ class CreateCooperadoDTO
         public readonly string $nome,
         public readonly string $documento,
         public readonly TipoPessoa $tipoPessoa,
-        public readonly DateTime $dataReferencia,
+        public readonly ?DateTime $dataNascimento,
+        public readonly ?DateTime $dataConstituicao,
         public readonly float $rendaFaturamento,
         public readonly string $telefone,
-        public readonly ?string $email = null,
+        public readonly ?string $email = null
     ) {}
 
     public static function fromArray(array $data): self
@@ -23,23 +24,37 @@ class CreateCooperadoDTO
             nome: $data['nome'],
             documento: $data['documento'],
             tipoPessoa: TipoPessoa::from($data['tipo_pessoa']),
-            dataReferencia: new DateTime($data['data_referencia']),
-            rendaFaturamento: (float) $data['renda_faturamento'],
+            dataNascimento: isset($data['data_nascimento']) ? new DateTime($data['data_nascimento']) : null,
+            dataConstituicao: isset($data['data_constituicao']) ? new DateTime($data['data_constituicao']) : null,
+            rendaFaturamento: $data['renda_faturamento'],
             telefone: $data['telefone'],
-            email: $data['email'] ?? null,
+            email: $data['email'] ?? null
         );
     }
 
     public function toArray(): array
     {
-        return [
+        $data = [
             'nome' => $this->nome,
             'documento' => $this->documento,
             'tipo_pessoa' => $this->tipoPessoa->value,
-            'data_referencia' => $this->dataReferencia->format('Y-m-d'),
             'renda_faturamento' => $this->rendaFaturamento,
             'telefone' => $this->telefone,
-            'email' => $this->email,
         ];
+
+        // Adicionar campos específicos por tipo
+        if ($this->tipoPessoa === TipoPessoa::PESSOA_FISICA && $this->dataNascimento) {
+            $data['data_nascimento'] = $this->dataNascimento->format('Y-m-d');
+        }
+
+        if ($this->tipoPessoa === TipoPessoa::PESSOA_JURIDICA && $this->dataConstituicao) {
+            $data['data_constituicao'] = $this->dataConstituicao->format('Y-m-d');
+        }
+
+        if ($this->email) {
+            $data['email'] = $this->email;
+        }
+
+        return $data;
     }
 }

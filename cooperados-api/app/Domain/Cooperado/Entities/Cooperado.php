@@ -4,16 +4,18 @@ namespace App\Domain\Cooperado\Entities;
 
 use App\Domain\Cooperado\Enums\TipoPessoa;
 use App\Domain\Cooperado\ValueObjects\{Cpf, Cnpj, Telefone, Email};
-use App\Shared\Traits\HasUuid;
+
 use DateTime;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cooperado extends Model
 {
-    use HasUuids, SoftDeletes, HasFactory;
+    use HasUuids, SoftDeletes;
+
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $table = 'cooperados';
 
@@ -21,7 +23,8 @@ class Cooperado extends Model
         'nome',
         'documento',
         'tipo_pessoa',
-        'data_referencia',
+        'data_nascimento',
+        'data_constituicao',
         'renda_faturamento',
         'telefone',
         'email',
@@ -29,7 +32,8 @@ class Cooperado extends Model
 
     protected $casts = [
         'tipo_pessoa' => TipoPessoa::class,
-        'data_referencia' => 'date',
+        'data_nascimento' => 'date',
+        'data_constituicao' => 'date',
         'renda_faturamento' => 'decimal:2',
         'email' => 'string',
     ];
@@ -97,6 +101,48 @@ class Cooperado extends Model
     public function isPessoaJuridica(): bool
     {
         return $this->tipo_pessoa === TipoPessoa::PESSOA_JURIDICA;
+    }
+
+    // Novos métodos para campos específicos
+    public function getDataIdentificacao(): ?DateTime
+    {
+        return $this->isPessoaFisica() 
+            ? $this->data_nascimento 
+            : $this->data_constituicao;
+    }
+
+    public function getDataIdentificacaoFormatada(): ?string
+    {
+        $data = $this->getDataIdentificacao();
+        return $data ? $data->format('d/m/Y') : null;
+    }
+
+    public function getDataNascimentoFormatada(): ?string
+    {
+        return $this->data_nascimento ? $this->data_nascimento->format('d/m/Y') : null;
+    }
+
+    public function getDataConstituicaoFormatada(): ?string
+    {
+        return $this->data_constituicao ? $this->data_constituicao->format('d/m/Y') : null;
+    }
+
+    public function getIdade(): ?int
+    {
+        if (!$this->data_nascimento || !$this->isPessoaFisica()) {
+            return null;
+        }
+        
+        return now()->diff($this->data_nascimento)->y;
+    }
+
+    public function getTempoConstituicao(): ?int
+    {
+        if (!$this->data_constituicao || !$this->isPessoaJuridica()) {
+            return null;
+        }
+        
+        return now()->diff($this->data_constituicao)->y;
     }
 
     public function getTipoPessoaLabel(): string
