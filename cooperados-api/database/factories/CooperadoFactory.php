@@ -50,7 +50,7 @@ class CooperadoFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'tipo_pessoa' => TipoPessoa::PESSOA_JURIDICA,
-            'documento' => '12345678000199', // CNPJ válido para testes
+            'documento' => '12345678000195', // CNPJ válido para testes
             'data_nascimento' => null,
             'data_constituicao' => $this->faker->dateTimeBetween('-30 years', '-1 year'),
         ]);

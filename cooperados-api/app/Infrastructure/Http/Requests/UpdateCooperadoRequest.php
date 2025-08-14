@@ -25,7 +25,7 @@ class UpdateCooperadoRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     $tipoPessoa = $this->input('tipo_pessoa');
                     $documentoNormalizado = preg_replace('/[^0-9]/', '', $value);
-                    
+
                     if ($tipoPessoa === TipoPessoa::PESSOA_FISICA->value) {
                         if (strlen($documentoNormalizado) !== 11) {
                             $fail('CPF deve ter 11 dígitos.');
@@ -39,7 +39,7 @@ class UpdateCooperadoRequest extends FormRequest
                 'unique:cooperados,documento,' . $this->route('cooperado')
             ],
             'tipo_pessoa' => ['sometimes', Rule::in(['PF', 'PJ'])],
-            
+
             // Campos específicos por tipo de pessoa
             'data_nascimento' => [
                 'sometimes',
@@ -52,13 +52,13 @@ class UpdateCooperadoRequest extends FormRequest
                     }
                 }
             ],
-            
+
             'data_constituicao' => [
                 'sometimes',
                 'date',
                 'before_or_equal:today'
             ],
-            
+
             'renda_faturamento' => 'sometimes|numeric|min:0.01|max:999999999.99',
             'telefone' => [
                 'sometimes',
@@ -81,14 +81,14 @@ class UpdateCooperadoRequest extends FormRequest
             'nome.max' => 'O nome não pode ter mais de 255 caracteres.',
             'documento.unique' => 'Este documento já está cadastrado.',
             'tipo_pessoa.in' => 'Tipo de pessoa deve ser PF ou PJ.',
-            
+
             // Mensagens específicas para campos de data
             'data_nascimento.date' => 'A data de nascimento deve ser uma data válida.',
             'data_nascimento.before_or_equal' => 'A data de nascimento não pode ser no futuro.',
-            
+
             'data_constituicao.date' => 'A data de constituição deve ser uma data válida.',
             'data_constituicao.before_or_equal' => 'A data de constituição não pode ser no futuro.',
-            
+
             'renda_faturamento.numeric' => 'A renda/faturamento deve ser um número.',
             'renda_faturamento.min' => 'A renda/faturamento deve ser maior que zero.',
             'renda_faturamento.max' => 'A renda/faturamento não pode ser maior que 999.999.999,99.',
@@ -135,7 +135,7 @@ class UpdateCooperadoRequest extends FormRequest
                 $data = new \DateTime($dataNascimento);
                 $hoje = new \DateTime();
                 $idade = $hoje->diff($data)->y;
-                
+
                 if ($idade < 18) {
                     $validator->errors()->add('data_nascimento', 'Cooperado deve ter pelo menos 18 anos.');
                 }
@@ -145,7 +145,7 @@ class UpdateCooperadoRequest extends FormRequest
             if ($dataConstituicao) {
                 $data = new \DateTime($dataConstituicao);
                 $hoje = new \DateTime();
-                
+
                 if ($data > $hoje) {
                     $validator->errors()->add('data_constituicao', 'Data de constituição não pode ser no futuro.');
                 }

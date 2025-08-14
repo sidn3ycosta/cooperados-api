@@ -62,7 +62,7 @@ class CooperadoApiTest extends TestCase
     {
         $data = [
             'nome' => 'Empresa LTDA',
-            'documento' => '12345678000199', // CNPJ válido
+            'documento' => '12345678000195', // CNPJ válido
             'tipo_pessoa' => 'PJ',
             'data_constituicao' => '2010-01-15',
             'renda_faturamento' => 100000.00,
@@ -91,7 +91,7 @@ class CooperadoApiTest extends TestCase
 
         $this->assertDatabaseHas('cooperados', [
             'nome' => 'Empresa LTDA',
-            'documento' => '12345678000199',
+            'documento' => '12345678000195',
             'tipo_pessoa' => 'PJ',
             'data_nascimento' => null,
             'data_constituicao' => '2010-01-15',
@@ -178,7 +178,7 @@ class CooperadoApiTest extends TestCase
     {
         $data = [
             'nome' => 'Empresa LTDA',
-            'documento' => '12345678000199', // CNPJ válido
+            'documento' => '12345678000195', // CNPJ válido
             'tipo_pessoa' => 'PJ',
             'renda_faturamento' => 100000.00,
             'telefone' => '1133333333'
