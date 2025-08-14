@@ -80,7 +80,7 @@ cd cooperados-api
 ### 2. Configure o ambiente
 ```bash
 # Copie o arquivo de ambiente
-cp env.example .env
+cp .env.example .env
 
 # Configure as variáveis se necessário
 # (As configurações padrão já estão corretas para Docker)
@@ -107,9 +107,44 @@ make migrate
 make key
 ```
 
-### 5. Acesse a aplicação
-- **API**: http://localhost:8000
+### 5. Verificar se está funcionando
+```bash
+# Status dos containers
+make status
+
+# Testar API
+curl http://localhost:8081/api/v1/health
+
+# Acessar Adminer
+# http://localhost:8080
+```
+
+### 6. Acesse a aplicação
+- **API**: http://localhost:8081
 - **Adminer (Banco)**: http://localhost:8080
+
+## 🌐 Portas Utilizadas
+
+- **8081**: API Laravel (via Nginx) - Porta principal
+- **8080**: Adminer (interface do banco)
+- **5432**: PostgreSQL (banco de dados)
+- **9000**: PHP-FPM (interno)
+
+## 🗄️ Banco de Dados
+
+### Credenciais padrão:
+- **Host**: localhost:5432
+- **Database**: cooperados_db
+- **Usuário**: cooperados_user
+- **Senha**: cooperados_pass
+
+### Acessar via Adminer:
+- **URL**: http://localhost:8080
+- **Sistema**: PostgreSQL
+- **Servidor**: db
+- **Usuário**: cooperados_user
+- **Senha**: cooperados_pass
+- **Banco**: cooperados_db
 
 ## 🛠️ Comandos Úteis
 
@@ -141,7 +176,7 @@ make clear       # Limpa todos os caches
 
 ### Base URL
 ```
-http://localhost:8000/api/v1
+http://localhost:8081/api/v1
 ```
 
 ### Endpoints
@@ -346,3 +381,8 @@ Este projeto foi desenvolvido para o processo seletivo da **Unicred**.
 - Testes automatizados
 - Cobertura de código
 - Padrões PSR-12
+
+## ⚠️ Nota sobre Autoload
+
+Durante a instalação, você pode ver warnings sobre classes PSR-4. 
+Isso é normal e não afeta o funcionamento da aplicação.
