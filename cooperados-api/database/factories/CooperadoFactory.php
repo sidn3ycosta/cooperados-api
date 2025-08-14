@@ -11,7 +11,7 @@ class CooperadoFactory extends Factory
     public function definition(): array
     {
         $tipoPessoa = $this->faker->randomElement([TipoPessoa::PESSOA_FISICA, TipoPessoa::PESSOA_JURIDICA]);
-        
+
         $baseData = [
             'nome' => $this->faker->name(),
             'renda_faturamento' => $this->faker->randomFloat(2, 1000, 100000),

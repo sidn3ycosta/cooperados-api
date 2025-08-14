@@ -107,8 +107,8 @@ class Cooperado extends Model
     // Novos métodos para campos específicos
     public function getDataIdentificacao(): ?DateTime
     {
-        return $this->isPessoaFisica() 
-            ? $this->data_nascimento 
+        return $this->isPessoaFisica()
+            ? $this->data_nascimento
             : $this->data_constituicao;
     }
 
@@ -133,7 +133,7 @@ class Cooperado extends Model
         if (!$this->data_nascimento || !$this->isPessoaFisica()) {
             return null;
         }
-        
+
         return now()->diff($this->data_nascimento)->y;
     }
 
@@ -142,7 +142,7 @@ class Cooperado extends Model
         if (!$this->data_constituicao || !$this->isPessoaJuridica()) {
             return null;
         }
-        
+
         return now()->diff($this->data_constituicao)->y;
     }
 

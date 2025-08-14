@@ -87,26 +87,29 @@ class UpdateCooperadoService
             throw new InvalidArgumentException('Renda/Faturamento deve ser maior que zero.');
         }
 
-        // Validar data de referência se fornecida
-        if ($dto->dataReferencia) {
-            $hoje = new \DateTime();
-            $dataReferencia = $dto->dataReferencia;
-            $tipoPessoa = $dto->tipoPessoa ?? $cooperado->tipo_pessoa;
-            
+        // Validar campos de data específicos se fornecidos
+        $hoje = new \DateTime();
+        $tipoPessoa = $dto->tipoPessoa ?? $cooperado->tipo_pessoa;
+        
+        if ($dto->dataNascimento) {
             if ($tipoPessoa === TipoPessoa::PESSOA_FISICA) {
                 // Para PF, data de nascimento não pode ser no futuro
-                if ($dataReferencia > $hoje) {
+                if ($dto->dataNascimento > $hoje) {
                     throw new InvalidArgumentException('Data de nascimento não pode ser no futuro.');
                 }
                 
                 // Idade mínima de 18 anos
-                $idadeMinima = $hoje->diff($dataReferencia)->y;
+                $idadeMinima = $hoje->diff($dto->dataNascimento)->y;
                 if ($idadeMinima < 18) {
                     throw new InvalidArgumentException('Cooperado deve ter pelo menos 18 anos.');
                 }
-            } else {
+            }
+        }
+        
+        if ($dto->dataConstituicao) {
+            if ($tipoPessoa === TipoPessoa::PESSOA_JURIDICA) {
                 // Para PJ, data de constituição não pode ser no futuro
-                if ($dataReferencia > $hoje) {
+                if ($dto->dataConstituicao > $hoje) {
                     throw new InvalidArgumentException('Data de constituição não pode ser no futuro.');
                 }
             }
