@@ -19,7 +19,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "nome": "João Silva",
     "documento": "123.456.789-09",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 5000.00,
     "telefone": "(11) 99999-9999",
     "email": "joao@email.com"
@@ -34,7 +34,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "nome": "Empresa LTDA",
     "documento": "12.345.678/0001-90",
     "tipo_pessoa": "PJ",
-    "data_referencia": "2010-01-01",
+    "data_constituicao": "2010-01-01",
     "renda_faturamento": 100000.00,
     "telefone": "(11) 3333-3333",
     "email": "contato@empresa.com"
@@ -49,7 +49,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "nome": "Maria Santos",
     "documento": "987.654.321-00",
     "tipo_pessoa": "PF",
-    "data_referencia": "1985-08-20",
+    "data_nascimento": "1985-08-20",
     "renda_faturamento": 3500.00,
     "telefone": "(21) 88888-8888"
   }'
@@ -108,7 +108,7 @@ curl -X PUT http://localhost:8000/api/v1/cooperados/123e4567-e89b-12d3-a456-4266
     "nome": "João Silva Santos",
     "documento": "123.456.789-09",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 6000.00,
     "telefone": "(11) 99999-9999",
     "email": "joao.santos@email.com"
@@ -148,7 +148,7 @@ criarCooperado({
   nome: "João Silva",
   documento: "123.456.789-09",
   tipo_pessoa: "PF",
-  data_referencia: "1990-05-15",
+  data_nascimento: "1990-05-15",
   renda_faturamento: 5000.00,
   telefone: "(11) 99999-9999",
   email: "joao@email.com"
@@ -202,7 +202,7 @@ dados = {
     "nome": "João Silva",
     "documento": "123.456.789-09",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 5000.00,
     "telefone": "(11) 99999-9999",
     "email": "joao@email.com"
@@ -259,7 +259,7 @@ print(f"Cooperados encontrados: {resultado}")
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"nome\": \"João Silva\",\n  \"documento\": \"123.456.789-09\",\n  \"tipo_pessoa\": \"PF\",\n  \"data_referencia\": \"1990-05-15\",\n  \"renda_faturamento\": 5000.00,\n  \"telefone\": \"(11) 99999-9999\",\n  \"email\": \"joao@email.com\"\n}"
+          "raw": "{\n  \"nome\": \"João Silva\",\n  \"documento\": \"123.456.789-09\",\n  \"tipo_pessoa\": \"PF\",\n  \"data_nascimento\": \"1990-05-15\",\n  \"renda_faturamento\": 5000.00,\n  \"telefone\": \"(11) 99999-9999\",\n  \"email\": \"joao@email.com\"\n}"
         },
         "url": {
           "raw": "http://localhost:8000/api/v1/cooperados",
@@ -307,7 +307,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "nome": "João Silva",
     "documento": "123.456.789-00",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 5000.00,
     "telefone": "(11) 99999-9999"
   }'
@@ -331,7 +331,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "nome": "Empresa LTDA",
     "documento": "12.345.678/0001-00",
     "tipo_pessoa": "PJ",
-    "data_referencia": "2010-01-01",
+    "data_constituicao": "2010-01-01",
     "renda_faturamento": 100000.00,
     "telefone": "(11) 3333-3333"
   }'
@@ -345,7 +345,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "nome": "João Silva",
     "documento": "123.456.789-09",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 5000.00,
     "telefone": "(11) 9999-9999"
   }'
@@ -360,7 +360,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "nome": "João Silva",
     "documento": "123.456.789-09",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 5000.00,
     "telefone": "(11) 99999-9999"
   }'
@@ -372,7 +372,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "nome": "João Silva Santos",
     "documento": "123.456.789-09",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 6000.00,
     "telefone": "(11) 88888-8888"
   }'
@@ -398,7 +398,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
     "documento_formatado": "123.456.789-09",
     "tipo_pessoa": "PF",
     "tipo_pessoa_label": "Pessoa Física",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 5000.00,
     "telefone": "11999999999",
     "telefone_formatado": "(11) 99999-9999",
@@ -420,7 +420,7 @@ curl -X POST http://localhost:8000/api/v1/cooperados \
       "documento_formatado": "123.456.789-09",
       "tipo_pessoa": "PF",
       "tipo_pessoa_label": "Pessoa Física",
-      "data_referencia": "1990-05-15",
+      "data_nascimento": "1990-05-15",
       "renda_faturamento": 5000.00,
       "telefone": "11999999999",
       "telefone_formatado": "(11) 99999-9999",

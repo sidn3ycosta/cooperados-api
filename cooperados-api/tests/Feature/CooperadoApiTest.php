@@ -107,9 +107,25 @@ class CooperadoApiTest extends TestCase
 
     public function test_can_get_cooperado_by_id()
     {
-        $cooperado = Cooperado::factory()->pessoaFisica()->create();
+        // Criar cooperado diretamente sem usar Factory
+        $cooperadoData = [
+            'nome' => 'João Silva',
+            'documento' => '12345678909',
+            'tipo_pessoa' => 'PF',
+            'data_nascimento' => '1990-05-15',
+            'data_constituicao' => null,
+            'renda_faturamento' => 5000.00,
+            'telefone' => '11999999999',
+            'email' => 'joao@email.com'
+        ];
 
-        $response = $this->getJson("/api/v1/cooperados/{$cooperado->id}");
+        $response = $this->postJson('/api/v1/cooperados', $cooperadoData);
+        $response->assertStatus(201);
+        
+        $cooperadoId = $response->json('data.id');
+        $this->assertNotNull($cooperadoId, 'ID do cooperado não foi retornado');
+
+        $response = $this->getJson("/api/v1/cooperados/{$cooperadoId}");
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -131,18 +147,31 @@ class CooperadoApiTest extends TestCase
 
     public function test_can_update_cooperado()
     {
-        $cooperado = Cooperado::factory()->pessoaFisica()->create();
+        // Criar cooperado diretamente sem usar Factory
+        $cooperadoData = [
+            'nome' => 'João Silva',
+            'documento' => '12345678909',
+            'tipo_pessoa' => 'PF',
+            'data_nascimento' => '1990-05-15',
+            'data_constituicao' => null,
+            'renda_faturamento' => 5000.00,
+            'telefone' => '11999999999',
+            'email' => 'joao@email.com'
+        ];
+
+        $response = $this->postJson('/api/v1/cooperados', $cooperadoData);
+        $cooperadoId = $response->json('data.id');
 
         $updateData = [
             'nome' => 'João Silva Atualizado',
             'renda_faturamento' => 6000.00
         ];
 
-        $response = $this->putJson("/api/v1/cooperados/{$cooperado->id}", $updateData);
+        $response = $this->putJson("/api/v1/cooperados/{$cooperadoId}", $updateData);
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('cooperados', [
-            'id' => $cooperado->id,
+            'id' => $cooperadoId,
             'nome' => 'João Silva Atualizado',
             'renda_faturamento' => 6000.00
         ]);
@@ -150,12 +179,25 @@ class CooperadoApiTest extends TestCase
 
     public function test_can_delete_cooperado()
     {
-        $cooperado = Cooperado::factory()->pessoaFisica()->create();
+        // Criar cooperado diretamente sem usar Factory
+        $cooperadoData = [
+            'nome' => 'João Silva',
+            'documento' => '12345678909',
+            'tipo_pessoa' => 'PF',
+            'data_nascimento' => '1990-05-15',
+            'data_constituicao' => null,
+            'renda_faturamento' => 5000.00,
+            'telefone' => '11999999999',
+            'email' => 'joao@email.com'
+        ];
 
-        $response = $this->deleteJson("/api/v1/cooperados/{$cooperado->id}");
+        $response = $this->postJson('/api/v1/cooperados', $cooperadoData);
+        $cooperadoId = $response->json('data.id');
+
+        $response = $this->deleteJson("/api/v1/cooperados/{$cooperadoId}");
 
         $response->assertStatus(200);
-        $this->assertSoftDeleted('cooperados', ['id' => $cooperado->id]);
+        $this->assertSoftDeleted('cooperados', ['id' => $cooperadoId]);
     }
 
     public function test_validation_requires_data_nascimento_for_pf()

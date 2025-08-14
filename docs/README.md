@@ -157,7 +157,7 @@ POST /cooperados
     "nome": "João Silva",
     "documento": "123.456.789-09",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 5000.00,
     "telefone": "(11) 99999-9999",
     "email": "joao@email.com"
@@ -170,7 +170,7 @@ POST /cooperados
     "nome": "Empresa LTDA",
     "documento": "12.345.678/0001-90",
     "tipo_pessoa": "PJ",
-    "data_referencia": "2010-01-01",
+    "data_constituicao": "2010-01-01",
     "renda_faturamento": 100000.00,
     "telefone": "(11) 3333-3333",
     "email": "contato@empresa.com"
@@ -233,7 +233,8 @@ CREATE TABLE cooperados (
     nome VARCHAR(255) NOT NULL,
     documento VARCHAR(18) UNIQUE NOT NULL,
     tipo_pessoa ENUM('PF', 'PJ') NOT NULL,
-    data_referencia DATE NOT NULL,
+    data_nascimento DATE NULL,
+data_constituicao DATE NULL,
     renda_faturamento DECIMAL(15,2) NOT NULL,
     telefone VARCHAR(15) NOT NULL,
     email VARCHAR(254) NULL,
@@ -247,7 +248,8 @@ CREATE TABLE cooperados (
 - `documento` - UNIQUE (inclui soft-deleted)
 - `nome` - Para busca por nome
 - `tipo_pessoa` - Para filtros
-- `data_referencia` - Para ordenação
+- `data_nascimento` - Para ordenação de PFs
+- `data_constituicao` - Para ordenação de PJs
 - `renda_faturamento` - Para relatórios
 
 ## 🔒 Segurança

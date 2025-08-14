@@ -123,7 +123,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nome\": \"João Silva Santos\",\n    \"documento\": \"123.456.789-09\",\n    \"tipo_pessoa\": \"PF\",\n    \"data_referencia\": \"1990-05-15\",\n    \"renda_faturamento\": 5000.00,\n    \"telefone\": \"(11) 99999-9999\",\n    \"email\": \"joao.silva@email.com\"\n}",
+        "raw": "{\n    \"nome\": \"João Silva Santos\",\n    \"documento\": \"123.456.789-09\",\n    \"tipo_pessoa\": \"PF\",\n    \"data_nascimento\": \"1990-05-15\",\n    \"renda_faturamento\": 5000.00,\n    \"telefone\": \"(11) 99999-9999\",\n    \"email\": \"joao.silva@email.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -163,7 +163,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nome\": \"Empresa LTDA\",\n    \"documento\": \"11.222.333/0001-81\",\n    \"tipo_pessoa\": \"PJ\",\n    \"data_referencia\": \"2010-01-01\",\n    \"renda_faturamento\": 100000.00,\n    \"telefone\": \"(11) 3333-3333\",\n    \"email\": \"contato@empresa.com\"\n}",
+        "raw": "{\n    \"nome\": \"Empresa LTDA\",\n    \"documento\": \"11.222.333/0001-81\",\n    \"tipo_pessoa\": \"PJ\",\n    \"data_constituicao\": \"2010-01-01\",\n    \"renda_faturamento\": 100000.00,\n    \"telefone\": \"(11) 3333-3333\",\n    \"email\": \"contato@empresa.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -271,7 +271,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nome\": \"\",\n    \"documento\": \"123.456.789-00\",\n    \"tipo_pessoa\": \"INVALIDO\",\n    \"data_referencia\": \"\",\n    \"renda_faturamento\": null,\n    \"telefone\": \"\",\n    \"email\": \"email-invalido\"\n}",
+        "raw": "{\n    \"nome\": \"\",\n    \"documento\": \"123.456.789-00\",\n    \"tipo_pessoa\": \"INVALIDO\",\n    \"data_nascimento\": \"\",\n    \"renda_faturamento\": null,\n    \"telefone\": \"\",\n    \"email\": \"email-invalido\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
