@@ -99,6 +99,38 @@ class CooperadoController extends \Illuminate\Routing\Controller
         }
     }
 
+    public function search(Request $request): JsonResponse
+    {
+        try {
+            $query = $request->get('q');
+            
+            if (!$query) {
+                return response()->json([
+                    'data' => [],
+                    'message' => 'Parâmetro de busca é obrigatório.'
+                ], 400);
+            }
+
+            $cooperados = $this->getService->paginateWithFilters(15, $query);
+
+            return response()->json([
+                'data' => $cooperados->items(),
+                'meta' => [
+                    'total' => $cooperados->total(),
+                    'per_page' => $cooperados->perPage(),
+                    'current_page' => $cooperados->currentPage(),
+                    'last_page' => $cooperados->lastPage(),
+                ]
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar cooperados.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function show(string $id): JsonResponse
     {
         try {
