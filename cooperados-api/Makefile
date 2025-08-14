@@ -66,8 +66,9 @@ setup: ## Configuração inicial do projeto
 	@make up
 	@echo "Aguardando containers..."
 	@sleep 10
+	@make composer-install
 	@make migrate
 	@make key
 	@echo "Projeto configurado com sucesso!"
-	@echo "Acesse: http://localhost:8000"
+	@echo "Acesse: http://localhost:8081"
 	@echo "Adminer: http://localhost:8080"
