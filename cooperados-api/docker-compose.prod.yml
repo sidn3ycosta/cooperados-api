@@ -1,0 +1,87 @@
+# Docker Compose para PRODUÇÃO
+# Use: docker compose -f docker-compose.prod.yml up -d
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cooperados-api-app-prod
+    restart: unless-stopped
+    working_dir: /var/www
+    # PRODUÇÃO: NÃO monte o código como volume
+    # volumes:
+    #   - ./:/var/www:delegated
+    env_file:
+      - .env.production
+    networks:
+      - cooperados-network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    image: nginx:1.27-alpine
+    container_name: cooperados-api-web-prod
+    restart: unless-stopped
+    ports:
+      - "80:80"                   # PRODUÇÃO: porta padrão
+    volumes:
+      # PRODUÇÃO: apenas arquivos necessários
+      - ./public:/var/www/public:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      app:
+        condition: service_started
+    networks:
+      - cooperados-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost/healthz || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  db:
+    image: postgres:15-alpine
+    container_name: cooperados-api-db-prod
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    # PRODUÇÃO: NÃO exponha porta externamente
+    # ports:
+    #   - "5432:5432"
+    networks:
+      - cooperados-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE} -h 127.0.0.1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PRODUÇÃO: NÃO exponha Adminer
+  # adminer:
+  #   image: adminer:latest
+  #   container_name: cooperados-api-adminer-prod
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - cooperados-network
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+
+volumes:
+  dbdata:
+    driver: local
+
+networks:
+  cooperados-network:
+    driver: bridge

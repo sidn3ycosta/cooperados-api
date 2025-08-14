@@ -1,0 +1,70 @@
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Cache
+.cache/
+
+# Laravel
+.env
+.env.local
+.env.production
+.env.testing
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+
+# Dependências
+node_modules/
+vendor/
+
+# Build
+dist/
+build/
+
+# Docker
+.dockerignore
+
+# Laravel específico
+/storage/*.key
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/app/public/*
+/bootstrap/cache/*
+
+# Testes
+.phpunit.cache/
+coverage/
+
+# Backup
+*.sql
+*.sqlite
+*.sqlite3
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

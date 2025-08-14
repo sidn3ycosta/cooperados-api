@@ -1,0 +1,491 @@
+{
+	"info": {
+		"_postman_id": "cooperados-api-collection",
+		"name": "Cooperados API",
+		"description": "Collection para testar a API de Cooperados - Sistema de Gestão de Cooperados",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "cooperados-api"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/up",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"up"
+					]
+				},
+				"description": "Verifica se a aplicação está rodando"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Cooperados",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados?nome={{nome_filtro}}&documento={{documento_filtro}}&tipo_pessoa={{tipo_pessoa_filtro}}&per_page={{per_page}}&page={{page}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "{{nome_filtro}}",
+							"description": "Filtrar por nome (opcional)"
+						},
+						{
+							"key": "documento",
+							"value": "{{documento_filtro}}",
+							"description": "Filtrar por documento (opcional)"
+						},
+						{
+							"key": "tipo_pessoa",
+							"value": "{{tipo_pessoa_filtro}}",
+							"description": "Filtrar por tipo de pessoa: PF ou PJ (opcional)"
+						},
+						{
+							"key": "per_page",
+							"value": "{{per_page}}",
+							"description": "Itens por página (padrão: 15)"
+						},
+						{
+							"key": "page",
+							"value": "{{page}}",
+							"description": "Número da página (padrão: 1)"
+						}
+					]
+				},
+				"description": "Lista todos os cooperados com paginação e filtros opcionais"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Cooperado por ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados/{{cooperado_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados",
+						"{{cooperado_id}}"
+					]
+				},
+				"description": "Busca um cooperado específico pelo ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Cooperado - Pessoa Física",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"João Silva Santos\",\n    \"documento\": \"123.456.789-09\",\n    \"tipo_pessoa\": \"PF\",\n    \"data_referencia\": \"1990-05-15\",\n    \"renda_faturamento\": 5000.00,\n    \"telefone\": \"(11) 99999-9999\",\n    \"email\": \"joao.silva@email.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados"
+					]
+				},
+				"description": "Cria um novo cooperado pessoa física"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Cooperado - Pessoa Jurídica",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Empresa LTDA\",\n    \"documento\": \"11.222.333/0001-81\",\n    \"tipo_pessoa\": \"PJ\",\n    \"data_referencia\": \"2010-01-01\",\n    \"renda_faturamento\": 100000.00,\n    \"telefone\": \"(11) 3333-3333\",\n    \"email\": \"contato@empresa.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados"
+					]
+				},
+				"description": "Cria um novo cooperado pessoa jurídica"
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Cooperado",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"João Silva Santos Atualizado\",\n    \"renda_faturamento\": 6000.00,\n    \"email\": \"joao.atualizado@email.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados/{{cooperado_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados",
+						"{{cooperado_id}}"
+					]
+				},
+				"description": "Atualiza dados de um cooperado existente"
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Cooperado",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados/{{cooperado_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados",
+						"{{cooperado_id}}"
+					]
+				},
+				"description": "Exclui um cooperado (soft delete)"
+			},
+			"response": []
+		},
+		{
+			"name": "Teste de Validação - Dados Inválidos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"\",\n    \"documento\": \"123.456.789-00\",\n    \"tipo_pessoa\": \"INVALIDO\",\n    \"data_referencia\": \"\",\n    \"renda_faturamento\": null,\n    \"telefone\": \"\",\n    \"email\": \"email-invalido\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados"
+					]
+				},
+				"description": "Testa validações com dados inválidos"
+			},
+			"response": []
+		},
+		{
+			"name": "Teste de Filtros - Busca por Nome",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados?nome=João",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "João"
+						}
+					]
+				},
+				"description": "Testa filtro por nome"
+			},
+			"response": []
+		},
+		{
+			"name": "Teste de Filtros - Busca por Documento",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados?documento=12345678909",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados"
+					],
+					"query": [
+						{
+							"key": "documento",
+							"value": "12345678909"
+						}
+					]
+				},
+				"description": "Testa filtro por documento"
+			},
+			"response": []
+		},
+		{
+			"name": "Teste de Filtros - Busca por Tipo de Pessoa",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados?tipo_pessoa=PF",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados"
+					],
+					"query": [
+						{
+							"key": "tipo_pessoa",
+							"value": "PF"
+						}
+					]
+				},
+				"description": "Testa filtro por tipo de pessoa"
+			},
+			"response": []
+		},
+		{
+			"name": "Teste de Paginação",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/cooperados?per_page=5&page=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cooperados"
+					],
+					"query": [
+						{
+							"key": "per_page",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Testa paginação com 5 itens por página"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "test",
+			"script": {
+				"exec": [
+					"// Script para capturar automaticamente o ID do cooperado criado",
+					"if (pm.response.code === 201 && pm.request.url.path.includes('/cooperados')) {",
+					"    const response = pm.response.json();",
+					"    if (response.data && response.data.id) {",
+					"        pm.environment.set('cooperado_id', response.data.id);",
+					"        console.log('ID do cooperado capturado:', response.data.id);",
+					"    }",
+					"}"
+				],
+				"type": "text/javascript"
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8081",
+			"type": "string",
+			"description": "URL base da API"
+		},
+		{
+			"key": "cooperado_id",
+			"value": "",
+			"type": "string",
+			"description": "ID do cooperado para testes (será preenchido automaticamente)"
+		},
+		{
+			"key": "nome_filtro",
+			"value": "",
+			"type": "string",
+			"description": "Filtro por nome (opcional)"
+		},
+		{
+			"key": "documento_filtro",
+			"value": "",
+			"type": "string",
+			"description": "Filtro por documento (opcional)"
+		},
+		{
+			"key": "tipo_pessoa_filtro",
+			"value": "",
+			"type": "string",
+			"description": "Filtro por tipo de pessoa: PF ou PJ (opcional)"
+		},
+		{
+			"key": "per_page",
+			"value": "15",
+			"type": "string",
+			"description": "Itens por página (padrão: 15)"
+		},
+		{
+			"key": "page",
+			"value": "1",
+			"type": "string",
+			"description": "Número da página (padrão: 1)"
+		}
+	]
+}
