@@ -91,7 +91,7 @@ A collection usa as seguintes variáveis de ambiente:
     "nome": "João Silva Santos",
     "documento": "123.456.789-09",
     "tipo_pessoa": "PF",
-    "data_referencia": "1990-05-15",
+    "data_nascimento": "1990-05-15",
     "renda_faturamento": 5000.00,
     "telefone": "(11) 99999-9999",
     "email": "joao.silva@email.com"
@@ -104,7 +104,7 @@ A collection usa as seguintes variáveis de ambiente:
     "nome": "Empresa LTDA",
     "documento": "11.222.333/0001-81",
     "tipo_pessoa": "PJ",
-    "data_referencia": "2010-01-01",
+    "data_constituicao": "2010-01-01",
     "renda_faturamento": 100000.00,
     "telefone": "(11) 3333-3333",
     "email": "contato@empresa.com"
@@ -134,7 +134,8 @@ GET /api/v1/cooperados?nome=Maria&tipo_pessoa=PF&per_page=10
 - `nome` - Não pode ser vazio
 - `documento` - CPF ou CNPJ válido
 - `tipo_pessoa` - Deve ser "PF" ou "PJ"
-- `data_referencia` - Data válida
+- `data_nascimento` - Data de nascimento para PF (obrigatório)
+- `data_constituicao` - Data de constituição para PJ (obrigatório)
 - `renda_faturamento` - Número positivo
 - `telefone` - Formato brasileiro válido
 
