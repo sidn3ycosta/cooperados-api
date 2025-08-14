@@ -73,18 +73,18 @@ class CreateCooperadoService
 
         // Validar campos de data específicos por tipo
         $hoje = new \DateTime();
-        
+
         if ($dto->tipoPessoa === TipoPessoa::PESSOA_FISICA) {
             // Para PF, validar data de nascimento
             if (!$dto->dataNascimento) {
                 throw new InvalidArgumentException('Data de nascimento é obrigatória para pessoa física.');
             }
-            
+
             // Data de nascimento não pode ser no futuro
             if ($dto->dataNascimento > $hoje) {
                 throw new InvalidArgumentException('Data de nascimento não pode ser no futuro.');
             }
-            
+
             // Idade mínima de 18 anos
             $idadeMinima = $hoje->diff($dto->dataNascimento)->y;
             if ($idadeMinima < 18) {
@@ -95,7 +95,7 @@ class CreateCooperadoService
             if (!$dto->dataConstituicao) {
                 throw new InvalidArgumentException('Data de constituição é obrigatória para pessoa jurídica.');
             }
-            
+
             // Data de constituição não pode ser no futuro
             if ($dto->dataConstituicao > $hoje) {
                 throw new InvalidArgumentException('Data de constituição não pode ser no futuro.');

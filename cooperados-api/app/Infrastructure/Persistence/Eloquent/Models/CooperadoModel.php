@@ -17,7 +17,8 @@ class CooperadoModel extends Cooperado
         'nome',
         'documento',
         'tipo_pessoa',
-        'data_referencia',
+        'data_nascimento',
+        'data_constituicao',
         'renda_faturamento',
         'telefone',
         'email',
@@ -25,7 +26,8 @@ class CooperadoModel extends Cooperado
 
     protected $casts = [
         'tipo_pessoa' => TipoPessoa::class,
-        'data_referencia' => 'date',
+        'data_nascimento' => 'date',
+        'data_constituicao' => 'date',
         'renda_faturamento' => 'decimal:2',
         'email' => 'string',
     ];
