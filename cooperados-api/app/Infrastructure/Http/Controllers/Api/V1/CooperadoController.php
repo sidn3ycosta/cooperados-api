@@ -103,7 +103,7 @@ class CooperadoController extends \Illuminate\Routing\Controller
     {
         try {
             $query = $request->get('q');
-            
+
             if (!$query) {
                 return response()->json([
                     'data' => [],

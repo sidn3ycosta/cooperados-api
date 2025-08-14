@@ -120,7 +120,10 @@ class CooperadoApiTest extends TestCase
         ];
 
         $response = $this->postJson('/api/v1/cooperados', $cooperadoData);
+        $response->assertStatus(201);
+        
         $cooperadoId = $response->json('data.id');
+        $this->assertNotNull($cooperadoId, 'ID do cooperado não foi retornado');
 
         $response = $this->getJson("/api/v1/cooperados/{$cooperadoId}");
 

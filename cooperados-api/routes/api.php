@@ -20,13 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
-    Route::apiResource('cooperados', CooperadoController::class);
-    
-    // Rota de busca
+    // Rota de busca (deve vir ANTES do apiResource)
     Route::get('cooperados/search', [CooperadoController::class, 'search']);
     
     // Rota de health check
     Route::get('health', function () {
         return response()->json(['status' => 'ok']);
     });
+    
+    // Rota principal dos cooperados (deve vir DEPOIS das rotas específicas)
+    Route::apiResource('cooperados', CooperadoController::class);
 });
