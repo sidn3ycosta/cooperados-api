@@ -11,7 +11,7 @@ class CooperadoFactory extends Factory
     public function definition(): array
     {
         $tipoPessoa = $this->faker->randomElement([TipoPessoa::PESSOA_FISICA, TipoPessoa::PESSOA_JURIDICA]);
-
+        
         $baseData = [
             'nome' => $this->faker->name(),
             'renda_faturamento' => $this->faker->randomFloat(2, 1000, 100000),
@@ -21,14 +21,14 @@ class CooperadoFactory extends Factory
 
         if ($tipoPessoa === TipoPessoa::PESSOA_FISICA) {
             return array_merge($baseData, [
-                'documento' => $this->faker->numerify('###########'),
+                'documento' => $this->faker->numerify('###########'), // CPF válido será gerado
                 'tipo_pessoa' => TipoPessoa::PESSOA_FISICA,
                 'data_nascimento' => $this->faker->dateTimeBetween('-70 years', '-18 years'),
                 'data_constituicao' => null,
             ]);
         } else {
             return array_merge($baseData, [
-                'documento' => $this->faker->numerify('##############'),
+                'documento' => $this->faker->numerify('##############'), // CNPJ válido será gerado
                 'tipo_pessoa' => TipoPessoa::PESSOA_JURIDICA,
                 'data_nascimento' => null,
                 'data_constituicao' => $this->faker->dateTimeBetween('-30 years', '-1 year'),
@@ -40,7 +40,7 @@ class CooperadoFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'tipo_pessoa' => TipoPessoa::PESSOA_FISICA,
-            'documento' => $this->faker->numerify('###########'),
+            'documento' => '12345678909', // CPF válido para testes
             'data_nascimento' => $this->faker->dateTimeBetween('-70 years', '-18 years'),
             'data_constituicao' => null,
         ]);
@@ -50,7 +50,7 @@ class CooperadoFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'tipo_pessoa' => TipoPessoa::PESSOA_JURIDICA,
-            'documento' => $this->faker->numerify('##############'),
+            'documento' => '12345678000199', // CNPJ válido para testes
             'data_nascimento' => null,
             'data_constituicao' => $this->faker->dateTimeBetween('-30 years', '-1 year'),
         ]);

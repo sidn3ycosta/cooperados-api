@@ -7,12 +7,13 @@ use App\Domain\Cooperado\ValueObjects\{Cpf, Cnpj, Telefone, Email};
 
 use DateTime;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cooperado extends Model
 {
-    use HasUuids, SoftDeletes;
+    use HasUuids, SoftDeletes, HasFactory;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -147,7 +148,10 @@ class Cooperado extends Model
 
     public function getTipoPessoaLabel(): string
     {
-        return $this->tipo_pessoa->label();
+        return match($this->tipo_pessoa) {
+            TipoPessoa::PESSOA_FISICA => 'Pessoa Física',
+            TipoPessoa::PESSOA_JURIDICA => 'Pessoa Jurídica',
+        };
     }
 
     // Mutators para normalização automática

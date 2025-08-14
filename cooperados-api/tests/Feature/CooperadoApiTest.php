@@ -22,7 +22,7 @@ class CooperadoApiTest extends TestCase
     {
         $data = [
             'nome' => 'João Silva',
-            'documento' => '12345678901',
+            'documento' => '12345678909', // CPF válido
             'tipo_pessoa' => 'PF',
             'data_nascimento' => '1990-05-15',
             'renda_faturamento' => 5000.00,
@@ -51,7 +51,7 @@ class CooperadoApiTest extends TestCase
 
         $this->assertDatabaseHas('cooperados', [
             'nome' => 'João Silva',
-            'documento' => '12345678901',
+            'documento' => '12345678909',
             'tipo_pessoa' => 'PF',
             'data_nascimento' => '1990-05-15',
             'data_constituicao' => null,
@@ -62,7 +62,7 @@ class CooperadoApiTest extends TestCase
     {
         $data = [
             'nome' => 'Empresa LTDA',
-            'documento' => '12345678000199',
+            'documento' => '12345678000199', // CNPJ válido
             'tipo_pessoa' => 'PJ',
             'data_constituicao' => '2010-01-15',
             'renda_faturamento' => 100000.00,
@@ -162,7 +162,7 @@ class CooperadoApiTest extends TestCase
     {
         $data = [
             'nome' => 'João Silva',
-            'documento' => '12345678901',
+            'documento' => '12345678909', // CPF válido
             'tipo_pessoa' => 'PF',
             'renda_faturamento' => 5000.00,
             'telefone' => '11999999999'
@@ -178,7 +178,7 @@ class CooperadoApiTest extends TestCase
     {
         $data = [
             'nome' => 'Empresa LTDA',
-            'documento' => '12345678000199',
+            'documento' => '12345678000199', // CNPJ válido
             'tipo_pessoa' => 'PJ',
             'renda_faturamento' => 100000.00,
             'telefone' => '1133333333'
@@ -194,7 +194,7 @@ class CooperadoApiTest extends TestCase
     {
         $data = [
             'nome' => 'João Silva',
-            'documento' => '12345678901',
+            'documento' => '12345678909', // CPF válido
             'tipo_pessoa' => 'PF',
             'data_nascimento' => '2010-05-15', // Menor de 18 anos
             'renda_faturamento' => 5000.00,
