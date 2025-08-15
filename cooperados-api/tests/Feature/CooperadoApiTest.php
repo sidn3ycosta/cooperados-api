@@ -113,7 +113,6 @@ class CooperadoApiTest extends TestCase
             'documento' => '12345678909',
             'tipo_pessoa' => 'PF',
             'data_nascimento' => '1990-05-15',
-            'data_constituicao' => null,
             'renda_faturamento' => 5000.00,
             'telefone' => '11999999999',
             'email' => 'joao@email.com'
@@ -121,7 +120,7 @@ class CooperadoApiTest extends TestCase
 
         $response = $this->postJson('/api/v1/cooperados', $cooperadoData);
         $response->assertStatus(201);
-        
+
         $cooperadoId = $response->json('data.id');
         $this->assertNotNull($cooperadoId, 'ID do cooperado não foi retornado');
 
@@ -153,7 +152,6 @@ class CooperadoApiTest extends TestCase
             'documento' => '12345678909',
             'tipo_pessoa' => 'PF',
             'data_nascimento' => '1990-05-15',
-            'data_constituicao' => null,
             'renda_faturamento' => 5000.00,
             'telefone' => '11999999999',
             'email' => 'joao@email.com'
@@ -185,7 +183,6 @@ class CooperadoApiTest extends TestCase
             'documento' => '12345678909',
             'tipo_pessoa' => 'PF',
             'data_nascimento' => '1990-05-15',
-            'data_constituicao' => null,
             'renda_faturamento' => 5000.00,
             'telefone' => '11999999999',
             'email' => 'joao@email.com'
@@ -196,7 +193,7 @@ class CooperadoApiTest extends TestCase
 
         $response = $this->deleteJson("/api/v1/cooperados/{$cooperadoId}");
 
-        $response->assertStatus(200);
+        $response->assertStatus(204);
         $this->assertSoftDeleted('cooperados', ['id' => $cooperadoId]);
     }
 
